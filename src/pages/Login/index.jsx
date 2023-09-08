@@ -10,7 +10,7 @@ AOS.init();
 
 const Login = () => {
   return (
-    <div className="containerLogin">
+    <div>
       <Container className="py-5">
         <Row className="justify-content-center">
           <Col data-aos="fade-right" md={5}>

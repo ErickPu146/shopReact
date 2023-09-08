@@ -1,11 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Acme&display=swap");
 
-.containerLogin {
-  width: 100vw;
-  height: 200vh;
-  background-color: #000000;
-}
-
 .first-login-card {
   background-color: #282c5a;
   background-image: linear-gradient(90deg, #282c5a 0%, #282c5a 100%);

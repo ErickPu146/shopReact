@@ -1,10 +1,13 @@
-import './App.css';
-import { RoutesApp } from "./routes"
+import "./App.css";
+import { RoutesApp } from "./routes";
+import { ProSidebarProvider } from "react-pro-sidebar";
 
 function App() {
   return (
     <>
-      <RoutesApp />
+      <ProSidebarProvider>
+        <RoutesApp />
+      </ProSidebarProvider>
     </>
   );
 }
