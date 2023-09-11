@@ -5,6 +5,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 64px;
-  width: 64px;
+}
+
+.active-light {
+  display: flex;
+  text-decoration: none;
+  background-color: #c5e4ff;
+  color: #44596e;
+}
+
+.active-dark {
+  display: flex;
+  text-decoration: none;
+  background-color: #00458b;
+  color: #b6c8d9;
 }

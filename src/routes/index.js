@@ -1,21 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { UsersCrud } from "../pages/Users";
-import { ContentProvider } from "../context";
+import { BrandsCrud } from "../pages/Brands";
+import { CategoriesCrud } from "../pages/Categories";
+import { ProductsCrud } from "../pages/Products";
 
 const RoutesApp = () => {
   return (
-    <Router>
-      <ContentProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/users-crud" element={<UsersCrud />} />
-        </Routes>
-      </ContentProvider>
-    </Router>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/users" element={<UsersCrud />} />
+      <Route path="/brands" element={<BrandsCrud />} />
+      <Route path="/categories" element={<CategoriesCrud />} />
+      <Route path="/products" element={<ProductsCrud />} />
+    </Routes>
   );
 };
 

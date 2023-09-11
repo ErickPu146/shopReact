@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 const customStylesTable = {
     table: {
         style: {
