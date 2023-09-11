@@ -58,7 +58,7 @@ const hexToRgba = (hex, alpha) => {
 };
 
 const SidebarApp = () => {
-  const { theme, setTheme } = useContext(ContentContext)
+  const { theme, setTheme } = useContext(ContentContext);
   const { collapseSidebar } = useProSidebar();
   const [collapsed, setCollapsed] = useState(false);
 
@@ -68,7 +68,7 @@ const SidebarApp = () => {
   };
 
   const changeTheme = () => {
-    if (theme == "light") {
+    if (theme === "light") {
       setTheme("dark");
     } else {
       setTheme("light");
@@ -111,6 +111,7 @@ const SidebarApp = () => {
         rootStyles={{
           color: themes[theme].sidebar.color,
         }}
+        className="position-relative"
       >
         <Menu menuItemStyles={menuItemStyles}>
           <MenuItem
@@ -134,19 +135,58 @@ const SidebarApp = () => {
           >
             <h2>Menú</h2>
           </MenuItem>
-          <MenuItem icon={<House />}>Home</MenuItem>
-          <MenuItem icon={<People />}>Usuarios</MenuItem>
-          <MenuItem icon={<People />}>Brands</MenuItem>
-          <MenuItem icon={<People />}>Categorias</MenuItem>
-          <MenuItem icon={<People />}>Productos</MenuItem>
-        </Menu>
-        <div className="button-change-color">
-          <Button
-            variant={theme == "light" ? "outline-primary" : "outline-info"}
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? theme === "light" ? "active-light" : "active-dark"
+                : "text-decoration-none text-reset"
+            }
           >
-            <CloudMoonFill onClick={changeTheme} className="fs-5" />
-          </Button>
-        </div>
+            <MenuItem icon={<House />}>Home</MenuItem>
+          </NavLink>
+          <NavLink
+            to="/users"
+            className={({ isActive }) =>
+              isActive
+                ? theme === "light" ? "active-light" : "active-dark"
+                : "text-decoration-none text-reset"
+            }
+          >
+            <MenuItem icon={<People />}>Usuarios</MenuItem>
+          </NavLink>
+          <NavLink
+            to="/brands"
+            className={({ isActive }) =>
+              isActive
+                ? theme === "light" ? "active-light" : "active-dark"
+                : "text-decoration-none text-reset"
+            }
+          >
+            <MenuItem icon={<People />}>Marcas</MenuItem>
+          </NavLink>
+          <NavLink
+            to="/categories"
+            className={({ isActive }) =>
+              isActive
+                ? theme === "light" ? "active-light" : "active-dark"
+                : "text-decoration-none text-reset"
+            }
+          >
+            <MenuItem icon={<People />}>Categorias</MenuItem>
+          </NavLink>
+          <NavLink
+            to="/products"
+            className={({ isActive }) =>
+              isActive
+                ? theme === "light" ? "active-light" : "active-dark"
+                : "text-decoration-none text-reset"
+            }
+          >
+            <MenuItem icon={<People />}>Productos</MenuItem>
+          </NavLink>
+          <MenuItem className="d-flex justify-content-center"  onClick={changeTheme} icon={<CloudMoonFill className="fs-5" />}></MenuItem>
+        </Menu>
       </Sidebar>
     </>
   );

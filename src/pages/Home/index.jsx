@@ -1,14 +1,15 @@
-import React from "react";
-import { SidebarApp } from "../../components/Sidebar";
+import React, { useContext } from "react";
+import { ContentContext } from "../../context";
+import { Container } from "react-bootstrap";
+
 const Home = () => {
+  const { theme } = useContext(ContentContext);
+
   return (
     <>
-      <div className="d-flex">
-        <SidebarApp />
-        <div style={{ flex: 1 }}>
-          <div>Contenido que aparecerá al lado del sidebar</div>
-        </div>
-      </div>
+      <Container className={`${theme === "light" ? "" : "text-light"}`}>
+        <div>Contenido que aparecerá al lado del sidebar</div>
+      </Container>
     </>
   );
 };

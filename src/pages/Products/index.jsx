@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { PencilFill, Plus, Search, XCircleFill } from "react-bootstrap-icons";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import DataTable from "react-data-table-component";
-import { useLocation } from "react-router-dom";
 import { ContentContext } from "../../context";
 import { customStylesTable } from "../../assets/StylesTable";
-import "../style.css"
+import { useLocation } from "react-router-dom";
+import "../style.css";
 
-const UsersCrud = () => {
+const ProductsCrud = () => {
   const { users, getCustomUsers, deleteUser, theme, handleShowModal } =
     useContext(ContentContext);
   const [selectedRows, setSelectedRows] = useState(new Set());
@@ -27,14 +27,14 @@ const UsersCrud = () => {
           handleShowModal(e.currentTarget.value, location.pathname)
         }
       >
-        <PencilFill className="" />
+        <PencilFill />
       </Button>
       <Button
         variant="danger"
         className="d-flex rounded-0"
         onClick={() => toDelete(row.id)}
       >
-        <XCircleFill className="" />
+        <XCircleFill />
       </Button>
     </>
   );
@@ -89,13 +89,13 @@ const UsersCrud = () => {
             theme === "light" ? "shadowLight" : "shadowDark"
           } text-center w-100 mt-3 p-1`}
         >
-          <h1>Usuarios</h1>
+          <h1>Productos</h1>
         </div>
         <Row className="justify-content-center my-4">
           <Col md="4">
             <Button
-              variant="success"
               value="new"
+              variant="success"
               onClick={(e) =>
                 handleShowModal(e.currentTarget.value, location.pathname)
               }
@@ -108,7 +108,7 @@ const UsersCrud = () => {
             <Form.Control
               className="w-50 rounded-start-pill"
               size="lg"
-              placeholder="Buscar por email"
+              placeholder="Buscar por nombre de producto"
             ></Form.Control>
             <Button variant="success" className="rounded-end-pill px-4">
               <Search />
@@ -141,4 +141,4 @@ const UsersCrud = () => {
   );
 };
 
-export { UsersCrud };
+export { ProductsCrud };
