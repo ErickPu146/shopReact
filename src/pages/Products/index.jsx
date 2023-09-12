@@ -24,6 +24,7 @@ const ProductsCrud = () => {
             <Button
               value="new"
               variant="success"
+              className="action"
               onClick={(e) => handleShowModal(e.currentTarget.value)}
             >
               <Plus className="fs-2" />

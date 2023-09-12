@@ -24,6 +24,7 @@ const UsersCrud = () => {
             <Button
               variant="success"
               value="new"
+              className="action"
               onClick={(e) => handleShowModal(e.currentTarget.value)}
             >
               <Plus className="fs-2" />

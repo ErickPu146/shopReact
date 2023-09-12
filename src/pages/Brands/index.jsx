@@ -24,6 +24,7 @@ const BrandsCrud = () => {
             <Button
               value="new"
               variant="success"
+              className="action"
               onClick={(e) =>
                 handleShowModal(e.currentTarget.value)
               }

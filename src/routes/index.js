@@ -10,7 +10,7 @@ const RoutesApp = () => {
 
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+      <Route path="/login" element={<LoginPage isLogged={isLogged} onLogin={handleLogin} />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route
         path="/*"

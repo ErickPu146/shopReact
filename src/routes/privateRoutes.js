@@ -9,7 +9,7 @@ import { ProductsCrud } from "../pages/Products";
 const PrivateRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="users" element={<UsersCrud />} />
       <Route path="/brands" element={<BrandsCrud />} />
       <Route path="/categories" element={<CategoriesCrud />} />
