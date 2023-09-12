@@ -3,53 +3,62 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./style.css";
 import logo from "../../assets/images/logo.png";
-import { Card, Col, Container, Row, Image } from "react-bootstrap";
-import { Formulario } from "../../components/Formulario";
+import { Card, Col, Container, Row, Image, Form } from "react-bootstrap";
+import { FormularioLogin } from "../../components/FormularioLogin";
+import { Facebook, Google, Linkedin } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 AOS.init();
 
-const Login = () => {
+const LoginPage = () => {
   return (
-    <div>
-      <Container className="py-5">
-        <Row className="justify-content-center">
-          <Col data-aos="fade-right" md={5}>
-            <Card bg="transparent" className="border border-0">
-              <Card.Title className="text-secondary text-center fs-1 fw-bolder abril-font">
-                Bienvenido!
-              </Card.Title>
-              <Image src={logo} roundedCircle />
-            </Card>
-          </Col>
-          <Col
-            data-aos="fade-left"
-            md={5}
-            className="second-login-card rounded-5 p-4"
-          >
-            <Card
-              bg="transparent"
-              className="border border-0 text-light d-flex gap-2"
-            >
-              <Card.Title className="text-center fw-bolder fs-2">
-                Inicia sesión
-              </Card.Title>
-              <Card.Body>
-                <p className="abril-font text-center fs-2">RUN & LIVE</p>
-                <Formulario />
-              </Card.Body>
-              <Card.Footer>
-                ¿No tienes cuenta?
-                <a href="/login" className="text-info text-decoration-none">
-                  {" "}
-                  Resgistrate!
-                </a>
-              </Card.Footer>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <Container>
+      <Row>
+        <Col md="6">
+          <Form>
+            <Row className="justify-content-center flex-column pt-4">
+              <Col>
+                <h1 className="text-center">Iniciar Sesión</h1>
+              </Col>
+              <Col>
+                <div className="social-container d-flex justify-content-center">
+                  <a className="social">
+                    <Facebook />
+                  </a>
+                  <a className="social>">
+                    <Google />
+                  </a>
+                  <a className="social">
+                    <Linkedin />
+                  </a>
+                </div>
+              </Col>
+              <Col className="d-flex flex-column">
+                <span>O usa tu email</span>
+                <Form.Control type="email" placeholder="Email" />
+                <Form.Control type="password" placeholder="Password" />
+                <a href="#">Olvidaste tu contraseña?</a>
+                <button type="button" className="action">Iniciar sesión</button>
+              </Col>
+            </Row>
+          </Form>
+        </Col>
+        <Col>
+          <div className="overlay-container">
+            <div className="overlay">
+              <div className="overlay-panel overlay-right">
+                <h1>¿No tienes cuenta?</h1>
+                <p>Registra tu cuenta:</p>
+                <button className="ghost" to="/register">
+                  Registrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
-export { Login };
+export { LoginPage };

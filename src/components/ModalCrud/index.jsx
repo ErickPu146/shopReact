@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { ContentContext } from "../../context";
 import { Modal, Form, Button } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
@@ -10,11 +10,10 @@ const ModalCrud = () => {
     currentDataModal,
     optionModal,
     dataToEdit,
-    sendData,
+    sendDataToCreate,
+    sendDataToEdit,
   } = useContext(ContentContext);
   const {
-    register,
-    getValues,
     setValue,
     control,
     handleSubmit,
@@ -22,11 +21,14 @@ const ModalCrud = () => {
     formState: { errors },
   } = useForm();
 
-
   const onSubmit = (data) => {
     console.log("🚀 ~ file: index.jsx:24 ~ onSubmit ~ data:", data);
     handleCloseModal();
-    sendData();
+    if (optionModal === "new") {
+      sendDataToCreate(data);
+    } else {
+      sendDataToEdit(dataToEdit.id, data);
+    }
     reset();
   };
 
@@ -34,8 +36,12 @@ const ModalCrud = () => {
   const data = currentDataModal.data;
 
   useEffect(() => {
-    if (dataToEdit.id) {
-      console.log(`si hay:`, dataToEdit);
+    for (const key in dataToEdit) {
+      if (Object.hasOwnProperty.call(dataToEdit, key)) {
+        if (key !== "id" && key !== "createdAt" && key !== "updatedAt") {
+          setValue(key, dataToEdit[key]);
+        }
+      }
     }
   }, [dataToEdit]);
 
@@ -63,15 +69,14 @@ const ModalCrud = () => {
                     <Controller
                       name={item}
                       control={control}
-                      rules={{required: 'Campo requerido'}}
+                      rules={{ required: "Campo requerido" }}
                       render={({ field }) => (
                         <Form.Control
                           autoComplete="off"
+                          defaultValue={dataToEdit[item] || ""}
                           type={index === 0 ? "email" : "password"}
-                          className={` ${
-                            errors[item] && !dataToEdit[item] ? "is-invalid" : ""
-                          }`}
-                          value={field.value || dataToEdit[item] || ""}
+                          className={` ${errors[item] ? "is-invalid" : ""}`}
+                          value={field.value}
                           onChange={field.onChange}
                         />
                       )}
@@ -87,15 +92,14 @@ const ModalCrud = () => {
                     <Controller
                       name={item}
                       control={control}
-                      rules={{required: 'Campo requerido'}}
+                      rules={{ required: "Campo requerido" }}
                       render={({ field }) => (
                         <Form.Control
                           autoComplete="off"
+                          defaultValue={dataToEdit[item] || ""}
                           type="text"
-                          className={` ${
-                            errors[item] && !dataToEdit[item] ? "is-invalid" : ""
-                          }`}
-                          value={field.value || dataToEdit[item] || ""}
+                          className={`${errors[item] ? "is-invalid" : ""}`}
+                          value={field.value}
                           onChange={field.onChange}
                         />
                       )}
@@ -115,11 +119,7 @@ const ModalCrud = () => {
             >
               Cancelar
             </Button>
-            <Button
-              type="submit"
-              value={optionModal}
-              variant="primary"
-            >
+            <Button type="submit" value={optionModal} variant="primary">
               {optionModal === "new" ? "Crear" : "Actualizar"}
             </Button>
           </Modal.Footer>

@@ -4,6 +4,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { ContentContext } from "../../context";
 import "../style.css";
 import { TableCrud } from "../../components/Table";
+import { AlertError } from "../../components/AlertError";
 
 const ProductsCrud = () => {
   const { theme, handleShowModal } = useContext(ContentContext);
@@ -23,9 +24,7 @@ const ProductsCrud = () => {
             <Button
               value="new"
               variant="success"
-              onClick={(e) =>
-                handleShowModal(e.currentTarget.value)
-              }
+              onClick={(e) => handleShowModal(e.currentTarget.value)}
             >
               <Plus className="fs-2" />
               <span>Nuevo</span>
@@ -40,6 +39,9 @@ const ProductsCrud = () => {
             <Button variant="success" className="rounded-end-pill px-4">
               <Search />
             </Button>
+          </Col>
+          <Col className="mt-4">
+            <AlertError />
           </Col>
         </Row>
         <TableCrud />

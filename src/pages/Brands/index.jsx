@@ -4,6 +4,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { ContentContext } from "../../context";
 import "../style.css";
 import { TableCrud } from "../../components/Table";
+import { AlertError } from "../../components/AlertError";
 
 const BrandsCrud = () => {
   const { theme, handleShowModal } = useContext(ContentContext);
@@ -40,6 +41,9 @@ const BrandsCrud = () => {
             <Button variant="success" className="rounded-end-pill px-4">
               <Search />
             </Button>
+          </Col>
+          <Col className="mt-4">
+            <AlertError />
           </Col>
         </Row>
         <TableCrud />

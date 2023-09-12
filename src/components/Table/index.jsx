@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { PencilFill, Plus, Search, XCircleFill } from "react-bootstrap-icons";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { PencilFill, XCircleFill } from "react-bootstrap-icons";
+import { Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { ContentContext } from "../../context";
@@ -14,11 +14,7 @@ const TableCrud = () => {
     theme,
     handleShowModal,
   } = useContext(ContentContext);
-  console.log(
-    "🚀 ~ file: index.jsx:17 ~ TableCrud ~ currentDataTable:",
-    currentDataTable
-  );
-  const [selectedRows, setSelectedRows] = useState(new Set());
+
   const [dynamicColumns, setDynamicColumns] = useState([]);
   const location = useLocation();
 
@@ -40,12 +36,15 @@ const TableCrud = () => {
 
       for (const key in firstRow) {
         if (Object.hasOwnProperty.call(firstRow, key)) {
-          columns.push({
-            name: key,
-            selector: (row) => row[key] || "", 
-            sortable: true,
-            center: true,
-          });
+          if (key !== "password") {
+            columns.push({
+              name: key,
+              selector: (row) => row[key] || "",
+              sortable: true,
+              center: true,
+              width: key === "id" ? "120px" : ""
+            });
+          }
         }
       }
 
@@ -74,41 +73,9 @@ const TableCrud = () => {
   );
 
   const toDelete = (id) => {
-    if (selectedRows.size > 0) {
-      deleteFunction(location.pathname, selectedRows);
-    } else {
-      deleteFunction(id);
-    }
-    setSelectedRows(new Set());
+    deleteFunction(id);
   };
 
-  const basicColumns = [
-    {
-      name: "ID",
-      selector: (row) => row.id || "",
-      sortable: true,
-      center: true,
-      width: "100px",
-    },
-    {
-      name: "Correo electronico",
-      selector: (row) => row.email || "",
-      sortable: true,
-      center: true,
-    },
-    {
-      name: "Fecha de creacion",
-      selector: (row) => row.createdAt,
-      sortable: true,
-      center: true,
-    },
-    {
-      name: "Fecha de actualizacion",
-      selector: (row) => row.updatedAt,
-      sortable: true,
-      center: true,
-    },
-  ];
   return (
     <>
       <DataTable
@@ -125,10 +92,6 @@ const TableCrud = () => {
         paginationComponentOptions={{
           rowsPerPageText: "Filas por pagina",
           rangeSeparatorText: "de",
-        }}
-        selectableRows
-        onSelectedRowsChange={({ selectedRows }) => {
-          setSelectedRows(new Set(selectedRows.map((row) => row.id)));
         }}
         noDataComponent="No se encontraron registros agregados."
       />

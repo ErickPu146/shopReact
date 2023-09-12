@@ -1,21 +1,21 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { Home } from "../pages/Home";
-import { Login } from "../pages/Login";
-import { UsersCrud } from "../pages/Users";
-import { BrandsCrud } from "../pages/Brands";
-import { CategoriesCrud } from "../pages/Categories";
-import { ProductsCrud } from "../pages/Products";
+import { useAuth } from "./useAuth";
+import { LoginPage } from "../pages/Login";
+import { Route, Routes } from "react-router-dom";
+import { AppUI } from "../App/appUI";
+import { RegisterPage } from "../pages/Register";
 
 const RoutesApp = () => {
+  const { isLogged, handleLogin, handleLogout } = useAuth();
+
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/" element={<Home />} />
-      <Route path="/users" element={<UsersCrud />} />
-      <Route path="/brands" element={<BrandsCrud />} />
-      <Route path="/categories" element={<CategoriesCrud />} />
-      <Route path="/products" element={<ProductsCrud />} />
+      <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route
+        path="/*"
+        element={<AppUI isLogged={isLogged} onLogout={handleLogout} />}
+      />
     </Routes>
   );
 };

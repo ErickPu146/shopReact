@@ -4,6 +4,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { ContentContext } from "../../context";
 import { TableCrud } from "../../components/Table";
 import "../style.css";
+import { AlertError } from "../../components/AlertError";
 
 const CategoriesCrud = () => {
   const { theme, handleShowModal } =
@@ -41,6 +42,9 @@ const CategoriesCrud = () => {
             <Button variant="success" className="rounded-end-pill px-4">
               <Search />
             </Button>
+          </Col>
+          <Col className="mt-4">
+            <AlertError />
           </Col>
         </Row>
         <TableCrud />

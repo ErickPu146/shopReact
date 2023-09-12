@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-const Formulario = () => {
+const FormularioLogin = () => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -39,4 +39,4 @@ const Formulario = () => {
   );
 };
 
-export { Formulario };
+export { FormularioLogin };

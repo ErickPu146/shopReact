@@ -1,14 +1,14 @@
 import "./app.css";
-import { AppUI } from "./appUI";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ContentProvider } from "../context";
+import { RoutesApp } from "../routes";
 
 function App() {
   return (
     <>
       <Router>
         <ContentProvider>
-            <AppUI />
+            <RoutesApp />
         </ContentProvider>
       </Router>
     </>
