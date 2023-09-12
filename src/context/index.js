@@ -39,24 +39,24 @@ const mock = [
 const modalDataOption = {
   users: {
     title: "Usuario",
-    data: ["Correo electrónico", "Contraseña"],
+    data: ["email", "password"],
   },
   brands: {
     title: "Marca",
-    data: ["Nombre de marca"],
+    data: ["name"],
   },
   categories: {
     title: "Categoria",
-    data: ["Nombre de categoria"],
+    data: ["name"],
   },
   products: {
     title: "Producto",
     data: [
-      "Nombre de producto",
-      "Precio",
-      "Id marca",
-      "Id categoria",
-      "Id usuario",
+      "name",
+      "price",
+      "brandID",
+      "categoryId",
+      "userId",
     ],
   },
 };

@@ -99,7 +99,7 @@ const BrandsCrud = () => {
               onClick={(e) =>
                 handleShowModal(e.currentTarget.value, location.pathname)
               }
-            >
+              >
               <Plus className="fs-2" />
               <span>Nuevo</span>
             </Button>
