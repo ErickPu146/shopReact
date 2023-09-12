@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ContentContext } from "../../context";
 import { Modal, Form, Button } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 const ModalCrud = () => {
   const {
@@ -9,28 +9,35 @@ const ModalCrud = () => {
     handleCloseModal,
     currentDataModal,
     optionModal,
+    dataToEdit,
     sendData,
   } = useContext(ContentContext);
   const {
     register,
     getValues,
     setValue,
+    control,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
 
-  // if(!showModal) {
-  //   reset();
-  // }
 
   const onSubmit = (data) => {
     console.log("🚀 ~ file: index.jsx:24 ~ onSubmit ~ data:", data);
+    handleCloseModal();
+    sendData();
     reset();
   };
 
   const title = currentDataModal.title;
   const data = currentDataModal.data;
+
+  useEffect(() => {
+    if (dataToEdit.id) {
+      console.log(`si hay:`, dataToEdit);
+    }
+  }, [dataToEdit]);
 
   return (
     <>
@@ -53,7 +60,22 @@ const ModalCrud = () => {
                 {data.map((item, index) => (
                   <Form.Group>
                     <Form.Label>{item}</Form.Label>
-                    <Form.Control type={index === 0 ? "email" : "password"} />
+                    <Controller
+                      name={item}
+                      control={control}
+                      rules={{required: 'Campo requerido'}}
+                      render={({ field }) => (
+                        <Form.Control
+                          autoComplete="off"
+                          type={index === 0 ? "email" : "password"}
+                          className={` ${
+                            errors[item] && !dataToEdit[item] ? "is-invalid" : ""
+                          }`}
+                          value={field.value || dataToEdit[item] || ""}
+                          onChange={field.onChange}
+                        />
+                      )}
+                    />
                   </Form.Group>
                 ))}
               </>
@@ -62,11 +84,21 @@ const ModalCrud = () => {
                 {data.map((item) => (
                   <Form.Group>
                     <Form.Label>{item}</Form.Label>
-                    <Form.Control
-                      type="text"
-                      {...register(item, {
-                        required: "Campo requerido",
-                      })}
+                    <Controller
+                      name={item}
+                      control={control}
+                      rules={{required: 'Campo requerido'}}
+                      render={({ field }) => (
+                        <Form.Control
+                          autoComplete="off"
+                          type="text"
+                          className={` ${
+                            errors[item] && !dataToEdit[item] ? "is-invalid" : ""
+                          }`}
+                          value={field.value || dataToEdit[item] || ""}
+                          onChange={field.onChange}
+                        />
+                      )}
                     />
                   </Form.Group>
                 ))}
@@ -87,7 +119,6 @@ const ModalCrud = () => {
               type="submit"
               value={optionModal}
               variant="primary"
-              onClick={sendData}
             >
               {optionModal === "new" ? "Crear" : "Actualizar"}
             </Button>

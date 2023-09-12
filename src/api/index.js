@@ -1,32 +1,21 @@
 import axios from "axios";
 
-export const getAllUsers = async () => {
+export const getAll = async (location) => {
   try {
-    const { data } = await axios.get("http://localhost:4000/users/");
-    return data.data
+    const { data } = await axios.get(`http://localhost:4000/${location}/`);
+    return data.data;
   } catch (error) {
     console.error(error.message);
     return [];
   }
 };
 
-export const getPokemonDetails = async (pokemon) => {
+export const getOne = async (location, id) => {
   try {
-    const { data } = await axios.get(pokemon.url);
-    return data;
+    const { data } = await axios.get(`http://localhost:4000/${location}/${id}`);
+    return data.data;
   } catch (error) {
     console.error(error.message);
-  }
-};
-
-export const searchAPokemon = async (idOrName) => {
-  try {
-    const { data } = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/${idOrName}`
-    );
-    return data;
-  } catch (error) {
-    console.error(error.message);
-    return "searchedFailed";
+    return {};
   }
 };

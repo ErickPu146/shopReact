@@ -1,13 +1,13 @@
 import { createContext, useState } from "react";
-import { getAllUsers } from "../api";
+import { getAll, getOne } from "../api";
 
 export const ContentContext = createContext();
 
 const mock = [
   {
     id: 1,
-    email: "<NAME>",
-    createdAt: "<EMAIL>",
+    email: "<Email>",
+    createdAt: "<created>",
     updatedAt: "updated",
   },
   {
@@ -62,39 +62,49 @@ const modalDataOption = {
 };
 
 export const ContentProvider = ({ children }) => {
-  const [users, setUser] = useState([{}]);
+  const [currentDataTable, setCurrentDataTable] = useState([{}]);
   const [theme, setTheme] = useState("light");
   const [showModal, setShowModal] = useState(false);
-  const [currentDataModal, setCurrentData] = useState(modalDataOption["users"]);
+  const [currentDataModal, setCurrentDataModal] = useState(modalDataOption["users"]);
   const [optionModal, setOptionModal] = useState(null);
   const [currentLocation, setCurrentLocation] = useState();
+  const [dataToEdit, setDataToEdit] = useState({})
+
+  const getCurrentDataTable = async (location) => {
+    location = location.slice(1);
+    setCurrentLocation(location)
+    const data = await getAll(location);
+    setCurrentDataTable(mock);
+  };
 
   const handleCloseModal = () => setShowModal(false);
-  const handleShowModal = (option, location) => {
-    location = location.slice(1);
+
+  const handleShowModal = async (option, idToEdit=0) => {
+    console.log("🚀 ~ file: index.js:83 ~ handleShowModal ~ idToEdit:", idToEdit)
     setOptionModal(option);
-    setCurrentLocation(location);
-    setCurrentData(modalDataOption[location]);
+    setCurrentDataModal(modalDataOption[currentLocation]);
+    if(idToEdit != 0){
+      const oneData = await getOne(currentLocation, idToEdit)
+      setDataToEdit(mock[idToEdit])
+    } else {
+      setDataToEdit({})
+    }
     setShowModal(true);
   };
 
   const sendData = () => {
-    alert(`Send to: ${currentLocation}, and was ${optionModal}`);
+    alert(`Send to: ${currentLocation}, and was ${optionModal}`); 
   };
 
-  const getCustomUsers = async () => {
-    const data = await getAllUsers();
-    setUser(mock);
-  };
 
-  const deleteUser = (selectedUsers) => {
-    if (selectedUsers.size > 0) {
-      setUser((prevData) =>
-        prevData.filter((record) => !selectedUsers.has(record.id))
+  const deleteFunction = (selectedData) => {
+    if (selectedData.size > 0) {
+      setCurrentDataTable((prevData) =>
+        prevData.filter((record) => !selectedData.has(record.id))
       );
     } else {
-      setUser((prevData) =>
-        prevData.filter((record) => record.id !== selectedUsers)
+      setCurrentDataTable((prevData) =>
+        prevData.filter((record) => record.id !== selectedData)
       );
     }
   };
@@ -107,10 +117,11 @@ export const ContentProvider = ({ children }) => {
     handleShowModal,
     currentDataModal,
     optionModal,
+    dataToEdit,
     sendData,
-    users,
-    getCustomUsers,
-    deleteUser,
+    currentDataTable,
+    getCurrentDataTable,
+    deleteFunction,
   };
 
   return (
