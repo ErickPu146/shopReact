@@ -52,3 +52,23 @@ export const editOne = async (location, id, data) => {
     return error.response.data;
   }
 };
+
+export const registerOneUser = async (location, data) => {
+  try {
+    const result = await axios.post(`http://localhost:4000/${location}/create`, data);
+    return result.data;
+  } catch (error) {
+    console.error(error.message);
+    return error.response.data;
+  }
+};
+
+export const loginUser = async (data) => {
+  try {
+    const result = await axios.post(`http://localhost:4000/login/auth`, data);
+    return result.data;
+  } catch (error) {
+    console.error(error.message);
+    return error.response.data;
+  }
+};

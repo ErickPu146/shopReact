@@ -40,7 +40,9 @@ const TableCrud = () => {
             key !== "password" &&
             key !== "brandId" &&
             key !== "categoryId" &&
-            key !== "userId"
+            key !== "userId" &&
+            key !== "createdAt" &&
+            key !== "updatedAt"
           ) {
             if (key === "Brand") {
               columns.push({

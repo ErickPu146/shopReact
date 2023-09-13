@@ -79,5 +79,17 @@ button.ghost {
 
 .overlay-left {
   background: #be4bdb;
-  transition: translateX(-20%);
+  background: linear-gradient(to right, #be4bdb, #d855f8) no-repeat 0 0 / cover;
+  color: #fff;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-content: center;
+}
+
+button.register {
+  border: 1px solid #b448cf;
+  background: #be4bdb;
+  padding: 12px 45px;
+  color: #fff;
 }
