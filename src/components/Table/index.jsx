@@ -20,7 +20,7 @@ const TableCrud = () => {
 
   useEffect(() => {
     getCurrentDataTable(location.pathname);
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (currentDataTable.length > 0) {
@@ -36,14 +36,43 @@ const TableCrud = () => {
 
       for (const key in firstRow) {
         if (Object.hasOwnProperty.call(firstRow, key)) {
-          if (key !== "password") {
-            columns.push({
-              name: key,
-              selector: (row) => row[key] || "",
-              sortable: true,
-              center: true,
-              width: key === "id" ? "120px" : ""
-            });
+          if (
+            key !== "password" &&
+            key !== "brandId" &&
+            key !== "categoryId" &&
+            key !== "userId"
+          ) {
+            if (key === "Brand") {
+              columns.push({
+                name: "Marca",
+                selector: (row) => (row.Brand ? row.Brand.name || "" : ""),
+                sortable: true,
+                center: true,
+              });
+            } else if (key === "Category") {
+              columns.push({
+                name: "Categoría",
+                selector: (row) =>
+                  row.Category ? row.Category.name || "" : "",
+                sortable: true,
+                center: true,
+              });
+            } else if (key === "User") {
+              columns.push({
+                name: "Usuario",
+                selector: (row) => (row.User ? row.User.email || "" : ""),
+                sortable: true,
+                center: true,
+              });
+            } else {
+              columns.push({
+                name: key,
+                selector: (row) => row[key] || "",
+                sortable: true,
+                center: true,
+                width: key === "id" ? "120px" : "",
+              });
+            }
           }
         }
       }

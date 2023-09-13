@@ -6,19 +6,28 @@ export const ContentContext = createContext();
 const modalDataOption = {
   users: {
     title: "Usuario",
-    data: ["email", "password"],
+    data: [
+      { title: "email", type: "email" },
+      { title: "password", type: "password" },
+    ],
   },
   brands: {
     title: "Marca",
-    data: ["name"],
+    data: [{ title: "name", type: "text" }],
   },
   categories: {
     title: "Categoria",
-    data: ["name"],
+    data: [{ title: "name", type: "text" }],
   },
   products: {
     title: "Producto",
-    data: ["name", "price", "brandId", "categoryId", "userId"],
+    data: [
+      { title: "name", type: "text" },
+      { title: "price", type: "number" },
+      { title: "brandId", type: "select" },
+      { title: "categoryId", type: "select" },
+      { title: "userId", type: "select" },
+    ],
   },
 };
 
@@ -34,13 +43,24 @@ export const ContentProvider = ({ children }) => {
   const [dataToEdit, setDataToEdit] = useState({});
   const [error, setError] = useState(false);
   const [alertErrorContent, setAlertErrorContent] = useState("");
+  const [dataToSelectsProduct, setDataToSelectProduct] = useState({});
 
   const getCurrentDataTable = async (location) => {
     setError(false);
+    setDataToEdit({})
     location = location.slice(1);
     setCurrentLocation(location);
     const data = await getAll(location);
     setCurrentDataTable(data);
+    if (location === "products") {
+      const users = await getAll("users");
+      const userOptions = users.map(user => ({ "value": user.id, "label": user.email }))
+      const brands = await getAll("brands");
+      const brandOptions = brands.map(brand => ({ "value": brand.id, "label": brand.name }))
+      const categories = await getAll("categories");
+      const categoryOptions = categories.map(category => ({ "value": category.id, "label": category.name }))
+      setDataToSelectProduct({"userId": userOptions, "brandId": brandOptions, "categoryId": categoryOptions})
+    }
   };
 
   const handleCloseModal = () => setShowModal(false);
@@ -68,7 +88,7 @@ export const ContentProvider = ({ children }) => {
   };
 
   const sendDataToEdit = async (id, data) => {
-    console.log("🚀 ~ file: index.js:75 ~ sendDataToEdit ~ data:", data)
+    console.log("🚀 ~ file: index.js:75 ~ sendDataToEdit ~ data:", data);
     const newData = await editOne(currentLocation, id, data);
     if (newData.error) {
       setError(true);
@@ -105,6 +125,8 @@ export const ContentProvider = ({ children }) => {
     error,
     setError,
     alertErrorContent,
+    dataToSelectsProduct,
+    currentLocation,
   };
 
   return (
