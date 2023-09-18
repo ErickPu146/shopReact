@@ -1,23 +1,25 @@
+import jwt_decode from "jwt-decode";
 import { useState } from "react";
 import { loginUser } from "../../api";
 
 const useLogin = () => {
   const [logged, setLogged] = useState(false);
-  const [tried, setTried] = useState(false)
   const [error, setError] = useState(false);
 
   const toLogin = async (data) => {
     const user = await loginUser(data);
-    console.log("🚀 ~ file: useLogin.js:10 ~ toLogin ~ user:", user)
     if (user.error) {
       setError(true);
-      setTried(true)
     } else {
       setLogged(true);
+      const { token } = user.data
+      localStorage.setItem("TOKENLOGGER", JSON.stringify(token));
+      const decoded = jwt_decode(token);
+      localStorage.setItem("USERLOGGER", JSON.stringify(decoded));
     }
   };
 
-  return { toLogin, logged, error, tried };
+  return { toLogin, logged, error };
 };
 
 export { useLogin };

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { createOne, deleteOne, editOne, getAll, getOne } from "../api";
 
 export const ContentContext = createContext();
@@ -9,6 +9,7 @@ const modalDataOption = {
     data: [
       { title: "email", type: "email" },
       { title: "password", type: "password" },
+      { title: "rol", type: "text" },
     ],
   },
   brands: {
@@ -47,19 +48,32 @@ export const ContentProvider = ({ children }) => {
 
   const getCurrentDataTable = async (location) => {
     setError(false);
-    setDataToEdit({})
+    setDataToEdit({});
     location = location.slice(1);
     setCurrentLocation(location);
     const data = await getAll(location);
     setCurrentDataTable(data);
     if (location === "products") {
       const users = await getAll("users");
-      const userOptions = users.map(user => ({ "value": user.id, "label": user.email }))
+      const userOptions = users.map((user) => ({
+        value: user.id,
+        label: user.email,
+      }));
       const brands = await getAll("brands");
-      const brandOptions = brands.map(brand => ({ "value": brand.id, "label": brand.name }))
+      const brandOptions = brands.map((brand) => ({
+        value: brand.id,
+        label: brand.name,
+      }));
       const categories = await getAll("categories");
-      const categoryOptions = categories.map(category => ({ "value": category.id, "label": category.name }))
-      setDataToSelectProduct({"userId": userOptions, "brandId": brandOptions, "categoryId": categoryOptions})
+      const categoryOptions = categories.map((category) => ({
+        value: category.id,
+        label: category.name,
+      }));
+      setDataToSelectProduct({
+        userId: userOptions,
+        brandId: brandOptions,
+        categoryId: categoryOptions,
+      });
     }
   };
 

@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./style.css";
 import { Col, Row, Form, Alert } from "react-bootstrap";
 import { Facebook, Google, Linkedin } from "react-bootstrap-icons";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useLogin } from "./useLogin";
 import { useForm } from "react-hook-form";
 
 AOS.init();
 
-const LoginPage = ({ isLogged, onLogin }) => {
+const LoginPage = ({ onLogin }) => {
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
   } = useForm();
-  const { toLogin, logged, error, tried } = useLogin();
+  const { toLogin, logged, error } = useLogin();
 
   const onSubmit = (data) => {
-    console.log("🚀 ~ file: index.jsx:24 ~ onSubmit ~ data:", data);
     toLogin(data);
     reset();
   };
@@ -29,9 +28,6 @@ const LoginPage = ({ isLogged, onLogin }) => {
     onLogin();
   }
 
-  if (isLogged) {
-    return <Navigate to="/home" />;
-  }
   return (
     <div className="container-login">
       <Row className="container-form-login">

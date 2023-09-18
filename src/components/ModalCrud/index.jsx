@@ -61,7 +61,7 @@ const ModalCrud = () => {
         );
         console.log("🚀 ~ file: index.jsx:62 ~ data.forEach ~ selectedOption:", selectedOption)
 
-        if (selectedOption) {
+        if (selectedOption ) {
           setValue(item.title, selectedOption);
         }
       }

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
 import "./style.css";
@@ -9,7 +9,6 @@ import {
   House,
   People,
 } from "react-bootstrap-icons";
-import { Button } from "react-bootstrap";
 import { ContentContext } from "../../context";
 
 const themes = {
@@ -61,6 +60,16 @@ const SidebarApp = () => {
   const { theme, setTheme } = useContext(ContentContext);
   const { collapseSidebar } = useProSidebar();
   const [collapsed, setCollapsed] = useState(false);
+  const [userRols, setUserRols] = useState([]);
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("USERLOGGER"));
+    console.log(
+      "🚀 ~ file: privateRoutes.js:14 ~ useEffect ~ userData:",
+      userData
+    );
+    setUserRols(userData.roles);
+  }, []);
 
   const toCollapse = () => {
     setCollapsed(!collapsed);
@@ -136,56 +145,90 @@ const SidebarApp = () => {
             <h2>Menú</h2>
           </MenuItem>
           <NavLink
-            to="/"
+            to="/home"
             className={({ isActive }) =>
               isActive
-                ? theme === "light" ? "active-light" : "active-dark"
+                ? theme === "light"
+                  ? "active-light"
+                  : "active-dark"
                 : "text-decoration-none text-reset"
             }
           >
             <MenuItem icon={<House />}>Home</MenuItem>
           </NavLink>
+          {userRols.some((rol) => rol === "Administrador") ? (
+            <>
+              <NavLink
+                to="/users"
+                className={({ isActive }) =>
+                  isActive
+                    ? theme === "light"
+                      ? "active-light"
+                      : "active-dark"
+                    : "text-decoration-none text-reset"
+                }
+              >
+                <MenuItem icon={<People />}>Usuarios</MenuItem>
+              </NavLink>
+              <NavLink
+                to="/brands"
+                className={({ isActive }) =>
+                  isActive
+                    ? theme === "light"
+                      ? "active-light"
+                      : "active-dark"
+                    : "text-decoration-none text-reset"
+                }
+              >
+                <MenuItem icon={<People />}>Marcas</MenuItem>
+              </NavLink>
+              <NavLink
+                to="/products"
+                className={({ isActive }) =>
+                  isActive
+                    ? theme === "light"
+                      ? "active-light"
+                      : "active-dark"
+                    : "text-decoration-none text-reset"
+                }
+              >
+                <MenuItem icon={<People />}>Productos</MenuItem>
+              </NavLink>{" "}
+            </>
+          ) : (
+            <>
+              <NavLink
+                to="/categories"
+                className={({ isActive }) =>
+                  isActive
+                    ? theme === "light"
+                      ? "active-light"
+                      : "active-dark"
+                    : "text-decoration-none text-reset"
+                }
+              >
+                <MenuItem icon={<People />}>Categorias</MenuItem>
+              </NavLink>
+            </>
+          )}
+
           <NavLink
-            to="/users"
+            to="/logout"
             className={({ isActive }) =>
               isActive
-                ? theme === "light" ? "active-light" : "active-dark"
+                ? theme === "light"
+                  ? "active-light"
+                  : "active-dark"
                 : "text-decoration-none text-reset"
             }
           >
-            <MenuItem icon={<People />}>Usuarios</MenuItem>
+            <MenuItem icon={<People />}>Logout</MenuItem>
           </NavLink>
-          <NavLink
-            to="/brands"
-            className={({ isActive }) =>
-              isActive
-                ? theme === "light" ? "active-light" : "active-dark"
-                : "text-decoration-none text-reset"
-            }
-          >
-            <MenuItem icon={<People />}>Marcas</MenuItem>
-          </NavLink>
-          <NavLink
-            to="/categories"
-            className={({ isActive }) =>
-              isActive
-                ? theme === "light" ? "active-light" : "active-dark"
-                : "text-decoration-none text-reset"
-            }
-          >
-            <MenuItem icon={<People />}>Categorias</MenuItem>
-          </NavLink>
-          <NavLink
-            to="/products"
-            className={({ isActive }) =>
-              isActive
-                ? theme === "light" ? "active-light" : "active-dark"
-                : "text-decoration-none text-reset"
-            }
-          >
-            <MenuItem icon={<People />}>Productos</MenuItem>
-          </NavLink>
-          <MenuItem className="d-flex justify-content-center"  onClick={changeTheme} icon={<CloudMoonFill className="fs-5" />}></MenuItem>
+          <MenuItem
+            className="d-flex justify-content-center"
+            onClick={changeTheme}
+            icon={<CloudMoonFill className="fs-5" />}
+          ></MenuItem>
         </Menu>
       </Sidebar>
     </>

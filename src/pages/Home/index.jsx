@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <Container className={`${theme === "light" ? "" : "text-light"}`}>
-        <div>Contenido que aparecerá al lado del sidebar</div>
+        <div>Este es el home</div>
       </Container>
     </>
   );
