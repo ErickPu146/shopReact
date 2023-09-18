@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { createOne, deleteOne, editOne, getAll, getOne } from "../api";
+const moment = require("moment");
 
 export const ContentContext = createContext();
 
@@ -51,8 +52,15 @@ export const ContentProvider = ({ children }) => {
     setDataToEdit({});
     location = location.slice(1);
     setCurrentLocation(location);
-    const data = await getAll(location);
+
+    let data = await getAll(location);
+    data = data.map((item) => ({
+      ...item,
+      createdAt: moment(item.createdAt).format("DD-MM-YYYY"),
+      updatedAt: moment(item.updatedAt).format("DD-MM-YYYY"),
+    }));
     setCurrentDataTable(data);
+
     if (location === "products") {
       const users = await getAll("users");
       const userOptions = users.map((user) => ({
@@ -102,7 +110,6 @@ export const ContentProvider = ({ children }) => {
   };
 
   const sendDataToEdit = async (id, data) => {
-    console.log("🚀 ~ file: index.js:75 ~ sendDataToEdit ~ data:", data);
     const newData = await editOne(currentLocation, id, data);
     if (newData.error) {
       setError(true);
